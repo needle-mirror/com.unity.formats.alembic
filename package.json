@@ -1,25 +1,28 @@
 {
-    "dependencies": {
-        "com.unity.modules.cloth": "1.0.0", 
-        "com.unity.modules.particlesystem": "1.0.0"
-    }, 
-    "description": "The Alembic package provides support to import and export Alembic files (.abc). Alembic is a format commonly used in animation to transfer facial, cloth, and other simulation between applications.", 
-    "displayName": "Alembic", 
-    "keywords": [
-        "alembic", 
-        "abc", 
-        "animation", 
-        "facial", 
-        "cloth", 
-        "simulation"
-    ], 
-    "name": "com.unity.formats.alembic", 
-    "repoPackagePath": "build/install/com.unity.formats.alembic", 
-    "repository": {
-        "type": "git", 
-        "revision": "9ec6cc58bdbb793cab608758d99ec3c2da3f2bfe",
-        "url": "ssh://git@github.com/unity3d-jp/AlembicForUnity.git"
-    }, 
-    "unity": "2018.1", 
-    "version": "1.0.0-preview.8"
+  "dependencies": {
+    "com.unity.timeline": "1.0.0"
+  },
+  "description": "The Alembic package provides support to import and export Alembic files (.abc). Alembic is a format commonly used in animation to transfer facial, cloth, and other simulation between applications.",
+  "displayName": "Alembic",
+  "keywords": [
+    "alembic",
+    "abc",
+    "animation",
+    "facial",
+    "cloth",
+    "simulation"
+  ],
+  "name": "com.unity.formats.alembic",
+  "repoPackagePath": "build/install/com.unity.formats.alembic",
+  "repository": {
+    "revision": "b5d22eb41a0181d9ea53806ec850ecd30da9d8d9", 
+    "type": "git", 
+    "url": "ssh://git@github.com/unity3d-jp/AlembicForUnity.git"
+  }, 
+  "unity": "2018.3",
+  "unityRelease": "4f1",
+  "version": "1.0.0",
+  "relatedPackages": {
+    "com.unity.formats.alembic.tests": "1.0.0"
+  }
 }
