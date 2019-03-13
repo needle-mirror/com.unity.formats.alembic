@@ -1,13 +1,16 @@
 # Changes in Alembic for Unity
 
+## [1.0.1] - 2019-03-14
+### Changes
+- Removed UnityEngine.UI references
+
 ## [1.0.0] - 2019-01-15
 ### Changes
 - Removed Timeline Alembic recorder
 - General cleanup
 ### Known Issues
 - The first time the Alembic package is used in a project, the shaders shipped with
-  it need to be reimported, or else all Alembic imports will fail (case 1125012)
-
+it need to be reimported, or else all Alembic imports will fail (case 1125012)
 
 ## [1.0.0-preview.13] - 2019-01-15
 ### Changes
