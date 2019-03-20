@@ -14,8 +14,12 @@
   ],
   "name": "com.unity.formats.alembic",
   "repoPackagePath": "build/install/com.unity.formats.alembic",
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:unity3d-jp/AlembicForUnity.git",
+    "revision": "0c2760bece1100fc78e53264ec8dbcb5ebacc40e"
+  },
   "unity": "2018.3",
   "unityRelease": "4f1",
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
