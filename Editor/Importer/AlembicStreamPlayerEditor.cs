@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Formats.Alembic.Importer;
 
-namespace UTJ.Alembic
+namespace UnityEditor.Formats.Alembic.Importer
 {
     [CustomEditor(typeof(AlembicStreamPlayer)),CanEditMultipleObjects]
-    public class AlembicStreamPlayerEditor : Editor
+    internal class AlembicStreamPlayerEditor : Editor
     {
         bool m_foldMisc = false;
 
@@ -16,7 +17,7 @@ namespace UTJ.Alembic
             SerializedProperty endTime = serializedObject.FindProperty("endTime");
 
             var streamPlayer = target as AlembicStreamPlayer;
-            var targetStreamDesc = streamPlayer.streamDescriptor;
+            var targetStreamDesc = streamPlayer.StreamDescriptor;
             var multipleTimeRanges = false;
             foreach (AlembicStreamPlayer player in targets)
             {
@@ -37,8 +38,8 @@ namespace UTJ.Alembic
 
             var abcStart = (float)targetStreamDesc.abcStartTime;
             var abcEnd = (float)targetStreamDesc.abcEndTime;
-            var start = (float)streamPlayer.startTime;
-            var end = (float)streamPlayer.endTime;
+            var start = (float)streamPlayer.StartTime;
+            var end = (float)streamPlayer.EndTime;
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.MinMaxSlider(" ", ref start, ref end, abcStart, abcEnd);
             if (EditorGUI.EndChangeCheck())
@@ -83,9 +84,17 @@ namespace UTJ.Alembic
             if(m_foldMisc)
             {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("ignoreVisibility"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("asyncLoad"));
+                EditorGUI.indentLevel--;
+            }
 
+#if UNITY_2018_3_OR_NEWER
+            var prefabStatus = PrefabUtility.GetPrefabInstanceStatus(streamPlayer.gameObject);
+            if (prefabStatus == PrefabInstanceStatus.NotAPrefab || prefabStatus == PrefabInstanceStatus.Disconnected)
+#else
+            if (PrefabUtility.GetPrefabType(streamPlayer.gameObject) == PrefabType.DisconnectedModelPrefabInstance)
+#endif
+            {
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.Space(16);
                 if (GUILayout.Button("Recreate Missing Nodes", GUILayout.Width(180)))
@@ -93,7 +102,6 @@ namespace UTJ.Alembic
                     streamPlayer.LoadStream(true);
                 }
                 EditorGUILayout.EndHorizontal();
-                EditorGUI.indentLevel--;
             }
 
             this.serializedObject.ApplyModifiedProperties();

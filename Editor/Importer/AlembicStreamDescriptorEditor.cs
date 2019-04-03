@@ -1,10 +1,11 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Formats.Alembic.Importer;
 
-namespace UTJ.Alembic
+namespace UnityEditor.Formats.Alembic.Importer
 {
     [CustomEditor(typeof(AlembicStreamDescriptor))]
-    public class AlembicStreamDescriptorEditor : Editor
+    internal class AlembicStreamDescriptorEditor : Editor
     {
 
         public override void OnInspectorGUI()

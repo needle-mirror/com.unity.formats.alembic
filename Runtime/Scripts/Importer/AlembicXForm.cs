@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.Formats.Alembic.Sdk;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Importer
 {
-    public class AlembicXform : AlembicElement
+    internal class AlembicXform : AlembicElement
     {
         aiXform m_abcSchema;
         aiXformData m_abcData;
 
-        public override aiSchema abcSchema { get { return m_abcSchema; } }
+        internal override aiSchema abcSchema { get { return m_abcSchema; } }
         public override bool visibility { get { return m_abcData.visibility; } }
 
-        public override void AbcSetup(aiObject abcObj, aiSchema abcSchema)
+        internal override void AbcSetup(aiObject abcObj, aiSchema abcSchema)
         {
             base.AbcSetup(abcObj, abcSchema);
 
@@ -24,7 +25,7 @@ namespace UTJ.Alembic
 
             m_abcSchema.sample.GetData(ref m_abcData);
 
-            if (!abcTreeNode.stream.ignoreVisibility)
+            if (abcTreeNode.stream.streamDescriptor.Settings.ImportVisibility)
                 abcTreeNode.gameObject.SetActive(m_abcData.visibility);
 
             var trans = abcTreeNode.gameObject.GetComponent<Transform>();

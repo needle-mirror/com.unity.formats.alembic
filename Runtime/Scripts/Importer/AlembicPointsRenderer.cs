@@ -7,23 +7,28 @@ using UnityEditor;
 #endif
 
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Importer
 {
-    public static class VPMatrices
+    internal static class VPMatrices
     {
-        static Dictionary<Camera, Matrix4x4> m_currentVPMatrix = new Dictionary<Camera, Matrix4x4>();
-        static Dictionary<Camera, Matrix4x4> m_previousVPMatrix = new Dictionary<Camera, Matrix4x4>();
-        static int m_frameCount;
+        static Dictionary<Camera, Matrix4x4> s_currentVPMatrix = new Dictionary<Camera, Matrix4x4>();
+        static Dictionary<Camera, Matrix4x4> s_previousVPMatrix = new Dictionary<Camera, Matrix4x4>();
+        static int s_frameCount;
 
         public static Matrix4x4 Get(Camera camera)
         {
-            if (Time.frameCount != m_frameCount) SwapMatrixMap();
+            if (Time.frameCount != s_frameCount) SwapMatrixMap();
+
+            if (!camera)
+            {
+                return new Matrix4x4();
+            }
 
             Matrix4x4 m;
-            if (!m_currentVPMatrix.TryGetValue(camera, out m))
+            if (!s_currentVPMatrix.TryGetValue(camera, out m))
             {
                 m = camera.nonJitteredProjectionMatrix * camera.worldToCameraMatrix;
-                m_currentVPMatrix.Add(camera, m);
+                s_currentVPMatrix.Add(camera, m);
             }
 
             return m;
@@ -31,10 +36,10 @@ namespace UTJ.Alembic
 
         public static Matrix4x4 GetPrevious(Camera camera)
         {
-            if (Time.frameCount != m_frameCount) SwapMatrixMap();
+            if (Time.frameCount != s_frameCount) SwapMatrixMap();
 
             Matrix4x4 m;
-            if (m_previousVPMatrix.TryGetValue(camera, out m))
+            if (s_previousVPMatrix.TryGetValue(camera, out m))
                 return m;
             else
                 return Get(camera);
@@ -42,17 +47,17 @@ namespace UTJ.Alembic
 
         static void SwapMatrixMap()
         {
-            var temp = m_previousVPMatrix;
-            m_previousVPMatrix = m_currentVPMatrix;
+            var temp = s_previousVPMatrix;
+            s_previousVPMatrix = s_currentVPMatrix;
             temp.Clear();
-            m_currentVPMatrix = temp;
-            m_frameCount = Time.frameCount;
+            s_currentVPMatrix = temp;
+            s_frameCount = Time.frameCount;
         }
     }
 
     [ExecuteInEditMode]
     [RequireComponent(typeof(AlembicPointsCloud))]
-    public class AlembicPointsRenderer : MonoBehaviour
+    internal class AlembicPointsRenderer : MonoBehaviour
     {
         [SerializeField] Mesh m_mesh;
         [SerializeField] Material[] m_materials;
@@ -84,11 +89,8 @@ namespace UTJ.Alembic
             set { m_mesh = value; }
         }
 
-        public Material[] sharedMaterials
-        {
-            get { return m_materials; }
-            set { m_materials = value; }
-        }
+        public Material[] GetSharedMaterials() { return m_materials; }
+        public void SetSharedMaterials(Material[] value) { m_materials = value; }
 
         public Material motionVectorMaterial
         {
@@ -337,6 +339,30 @@ namespace UTJ.Alembic
             m_position = m_positionOld = trans.position;
             m_rotation = m_rotationOld = trans.rotation;
             m_scale = m_scaleOld = trans.lossyScale;
+        }
+
+        private void OnDestroy()
+        {
+            if (m_cbPoints != null)
+            {
+                m_cbPoints.Dispose();
+            }
+            if (m_cbVelocities != null)
+            {
+                m_cbVelocities.Dispose();
+            }
+            if (m_cbIDs != null)
+            {
+                m_cbIDs.Dispose();
+            }
+            if (m_cmdMotionVector != null)
+            {
+                m_cmdMotionVector.Dispose();
+            }
+            if (m_cbArgs != null)
+            {
+                Array.ForEach<ComputeBuffer>(m_cbArgs, cb => { if (cb != null) cb.Dispose(); });
+            }
         }
     }
 }

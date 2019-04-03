@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Importer
 {
 
-    public class AlembicTreeNode : IDisposable
+    internal sealed class AlembicTreeNode : IDisposable
     {
-        public AlembicStream stream;
-        public GameObject gameObject;
-        public AlembicElement abcObject;
-        public List<AlembicTreeNode> children = new List<AlembicTreeNode>();
+        public AlembicStream stream { get; set; }
+        public GameObject gameObject { get; set; }
+        internal AlembicElement abcObject { get; set; }
+
+        private List<AlembicTreeNode> children = new List<AlembicTreeNode>();
+        public List<AlembicTreeNode> Children
+        {
+            get { return children; }
+        }
 
         public void Dispose()
         {
@@ -21,9 +26,9 @@ namespace UTJ.Alembic
 
         public void ResetTree()
         {
-            foreach (var c in children)
+            foreach (var c in Children)
                 c.Dispose();
-            children.Clear();
+            Children.Clear();
 
             if (abcObject != null)
             {
@@ -32,7 +37,7 @@ namespace UTJ.Alembic
             }
         }
 
-        public T GetOrAddAlembicObj<T>() where T : AlembicElement, new()
+        internal T GetOrAddAlembicObj<T>() where T : AlembicElement, new()
         {
             var o = abcObject as T;
             if (o == null)
@@ -43,12 +48,12 @@ namespace UTJ.Alembic
             return o;
         }
 
-        public T GetAlembicObj<T>() where T : AlembicElement, new()
+        internal T GetAlembicObj<T>() where T : AlembicElement, new()
         {
             return abcObject as T;
         }
 
-        public void RemoveAlembicObject(AlembicElement obj)
+        internal void RemoveAlembicObject(AlembicElement obj)
         {
             if (obj != null && obj == abcObject)
             {
@@ -61,7 +66,7 @@ namespace UTJ.Alembic
             if (go == gameObject)
                 return this;
 
-            foreach (var child in children)
+            foreach (var child in Children)
             {
                 var x = child.FindNode(go);
                 if (x != null)

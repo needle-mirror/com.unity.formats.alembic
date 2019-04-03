@@ -4,22 +4,24 @@ using UnityEngine.Playables;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using UnityEngine.Formats.Alembic.Sdk;
+using UnityEngine.Formats.Alembic.Util;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Timeline
 {
-    public class AlembicRecorderBehaviour : PlayableBehaviour
+    internal class AlembicRecorderBehaviour : PlayableBehaviour, IDisposable
     {
-        #region fields
+#region fields
         AlembicRecorder m_recorder = new AlembicRecorder();
         bool m_ignoreFirstFrame = true;
         int m_prevFrame = 0;
         bool m_firstFrame;
         PlayState m_playState = PlayState.Paused;
-        #endregion
+#endregion
 
 
-        #region properties
-        public AlembicRecorderSettings settings
+#region properties
+        internal AlembicRecorderSettings settings
         {
             get { return m_recorder.settings; }
             set { m_recorder.settings = value; }
@@ -30,10 +32,10 @@ namespace UTJ.Alembic
             set { m_ignoreFirstFrame = value; }
         }
 
-        #endregion
+#endregion
 
 
-        #region impl
+#region impl
         void BeginRecording()
         {
             m_firstFrame = true;
@@ -42,9 +44,9 @@ namespace UTJ.Alembic
             if (m_recorder.BeginRecording())
             {
                 var settings = m_recorder.settings;
-                if (settings.conf.timeSamplingType == aeTimeSamplingType.Uniform && settings.fixDeltaTime)
+                if (settings.conf.TimeSamplingType == aeTimeSamplingType.Uniform && settings.FixDeltaTime)
                 {
-                    Time.maximumDeltaTime = (1.0f / settings.conf.frameRate);
+                    Time.maximumDeltaTime = (1.0f / settings.conf.FrameRate);
                 }
             }
         }
@@ -68,10 +70,10 @@ namespace UTJ.Alembic
 
             m_recorder.ProcessRecording();
         }
-        #endregion
+#endregion
 
 
-        #region messsages
+#region messsages
 
         public override void OnPlayableCreate(Playable playable)
         {
@@ -132,6 +134,17 @@ namespace UTJ.Alembic
         {
             ProcessRecording();
         }
-        #endregion
+
+        protected virtual void Dispose(bool v)
+        {
+            if(m_recorder != null) m_recorder.Dispose();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+#endregion
     }
 }

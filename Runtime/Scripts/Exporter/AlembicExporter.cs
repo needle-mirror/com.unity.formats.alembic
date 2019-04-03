@@ -3,14 +3,12 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using UnityEngine.Formats.Alembic.Util;
 
-
-
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Exporter
 {
     [ExecuteInEditMode]
-    [AddComponentMenu("UTJ/Alembic/Exporter")]
-    public class AlembicExporter : MonoBehaviour
+    internal class AlembicExporter : MonoBehaviour
     {
         #region fields
         [SerializeField] AlembicRecorder m_recorder = new AlembicRecorder();
@@ -35,9 +33,9 @@ namespace UTJ.Alembic
         void InitializeOutputPath()
         {
             var settings = m_recorder.settings;
-            if (settings.outputPath == null || settings.outputPath == "")
+            if (string.IsNullOrEmpty(settings.OutputPath))
             {
-                settings.outputPath = "Output/" + gameObject.name + ".abc";
+                settings.OutputPath = "Output/" + gameObject.name + ".abc";
             }
         }
 
@@ -122,6 +120,11 @@ namespace UTJ.Alembic
         void OnDisable()
         {
             EndRecording();
+        }
+
+        private void OnDestroy()
+        {
+            if(recorder != null) recorder.Dispose();
         }
         #endregion
     }

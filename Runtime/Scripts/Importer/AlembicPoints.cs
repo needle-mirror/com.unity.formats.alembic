@@ -1,9 +1,10 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Formats.Alembic.Sdk;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Importer
 {
-    public class AlembicPoints : AlembicElement
+    internal class AlembicPoints : AlembicElement
     {
         // members
         aiPoints m_abcSchema;
@@ -11,10 +12,10 @@ namespace UTJ.Alembic
         aiPointsSummary m_summary;
         aiPointsSampleSummary m_sampleSummary;
 
-        public override aiSchema abcSchema { get { return m_abcSchema; } }
+        internal override aiSchema abcSchema { get { return m_abcSchema; } }
         public override bool visibility { get { return m_abcData[0].visibility; } }
 
-        public override void AbcSetup(aiObject abcObj, aiSchema abcSchema)
+        internal override void AbcSetup(aiObject abcObj, aiSchema abcSchema)
         {
             base.AbcSetup(abcObj, abcSchema);
             m_abcSchema = (aiPoints)abcSchema;
@@ -81,7 +82,7 @@ namespace UTJ.Alembic
 
             var data = m_abcData[0];
 
-            if (!abcTreeNode.stream.ignoreVisibility)
+            if (abcTreeNode.stream.streamDescriptor.Settings.ImportVisibility)
                 abcTreeNode.gameObject.SetActive(data.visibility);
 
             var cloud = abcTreeNode.gameObject.GetComponent<AlembicPointsCloud>();

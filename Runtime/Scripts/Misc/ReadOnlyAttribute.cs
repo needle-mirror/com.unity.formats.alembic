@@ -1,8 +1,10 @@
 using UnityEngine;
+using System;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Importer
 {
-    public class ReadOnlyAttribute : PropertyAttribute
+    [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    internal sealed class ReadOnlyAttribute : PropertyAttribute
     {
     }
 }

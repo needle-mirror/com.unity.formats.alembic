@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Formats.Alembic.Util;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Timeline
 {
     [System.ComponentModel.DisplayName("Alembic Recorder Clip")]
-    public class AlembicRecorderClip : PlayableAsset, ITimelineClipAsset
+    internal class AlembicRecorderClip : PlayableAsset, ITimelineClipAsset
     {
         [SerializeField] AlembicRecorderSettings m_settings = new AlembicRecorderSettings();
         [SerializeField] bool m_ignoreFirstFrame = true;
@@ -23,6 +24,11 @@ namespace UTJ.Alembic
 
         public static GameObject FindObjectByPath(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
             var names = path.Split('/');
             Transform ret = null;
             foreach (var name in names)
@@ -73,7 +79,7 @@ namespace UTJ.Alembic
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            m_settings.targetBranch = targetBranch;
+            m_settings.TargetBranch = targetBranch;
 
             var ret = ScriptPlayable<AlembicRecorderBehaviour>.Create(graph);
             var behaviour = ret.GetBehaviour();

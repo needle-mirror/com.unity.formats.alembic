@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Sdk
 {
 
-    public class PinnedObject<T> : IDisposable
+    internal class PinnedObject<T> : IDisposable
     {
         T m_data;
         GCHandle m_gch;
@@ -35,11 +35,14 @@ namespace UTJ.Alembic
             }
         }
 
-        public static implicit operator IntPtr(PinnedObject<T> v) { return v.Pointer; }
+        public static implicit operator IntPtr(PinnedObject<T> v) {
+            return v == null ? IntPtr.Zero : v.Pointer;
+        }
+        internal static IntPtr ToIntPtr(PinnedObject<T> v) { return v; }
     }
 
 
-    public class PinnedArray<T> : IDisposable, IEnumerable<T> where T : struct
+    internal class PinnedArray<T> : IDisposable, IEnumerable<T> where T : struct
     {
         T[] m_data;
         GCHandle m_gch;
@@ -51,6 +54,7 @@ namespace UTJ.Alembic
         }
         public PinnedArray(T[] data, bool clone = false)
         {
+            if(data == null) { return; }
             m_data = clone ? (T[])data.Clone() : data;
             m_gch = GCHandle.Alloc(m_data, GCHandleType.Pinned);
         }
@@ -61,7 +65,8 @@ namespace UTJ.Alembic
             get { return m_data[i]; }
             set { m_data[i] = value; }
         }
-        public T[] Array { get { return m_data; } }
+
+        public T[] GetArray() { return m_data; }
         public IntPtr Pointer { get { return m_data.Length == 0 ? IntPtr.Zero : m_gch.AddrOfPinnedObject(); } }
 
         public PinnedArray<T> Clone() { return new PinnedArray<T>((T[])m_data.Clone()); }
@@ -100,39 +105,41 @@ namespace UTJ.Alembic
         }
 
         public static implicit operator IntPtr(PinnedArray<T> v) { return v == null ? IntPtr.Zero : v.Pointer; }
+        internal static IntPtr ToIntPtr(PinnedArray<T> v) { return v; }
     }
 
-
-    // Pinned"List" but assume size is fixed (== functionality is same as PinnedArray).
-    // this class is intended to pass to Mesh.GetNormals(), Mesh.SetNormals(), and C++ functions.
-    public class PinnedList<T> : IDisposable, IEnumerable<T> where T : struct
+    #region dirty
+    internal static class PinnedListImpl
     {
-        List<T> m_list;
-        T[] m_data;
-        GCHandle m_gch;
-
-        #region dirty
-
         class ListData
         {
-            public T[] items;
+            public object items;
             public int size;
         }
         [StructLayout(LayoutKind.Explicit)]
         struct Caster
         {
-            [FieldOffset(0)] public List<T> list;
+            [FieldOffset(0)] public object list;
             [FieldOffset(0)] public ListData data;
         }
 
-        public static T[] ListGetInternalArray(List<T> list)
+        internal static T[] GetInternalArray<T>(List<T> list) where T : struct
         {
+            if(list == null)
+            {
+                return null;
+            }
             var caster = new Caster();
             caster.list = list;
-            return caster.data.items;
+            return (T[])caster.data.items;
         }
-        public static List<T> ListCreateIntrusive(T[] data)
+        internal static List<T> CreateIntrusiveList<T>(T[] data) where T : struct
         {
+            if(data == null)
+            {
+                return null;
+            }
+
             var ret = new List<T>();
             var caster = new Caster();
             caster.list = ret;
@@ -140,31 +147,50 @@ namespace UTJ.Alembic
             caster.data.size = data.Length;
             return ret;
         }
-        public static void ListSetCount(List<T> list, int count)
+        internal static void SetCount<T>(List<T> list, int count) where T : struct
         {
+            if(list == null)
+            {
+                return;
+            }
+
             var caster = new Caster();
             caster.list = list;
             caster.data.size = count;
         }
-        #endregion
+    }
+    #endregion
 
+
+    // Pinned"List" but assume size is fixed (== functionality is same as PinnedArray).
+    // this class is intended to pass to Mesh.GetNormals(), Mesh.SetNormals(), and C++ functions.
+    internal class PinnedList<T> : IDisposable, IEnumerable<T> where T : struct
+    {
+        List<T> m_list;
+        T[] m_data;
+        GCHandle m_gch;
 
         public PinnedList(int size = 0)
         {
             m_data = new T[size];
-            m_list = ListCreateIntrusive(m_data);
+            m_list = PinnedListImpl.CreateIntrusiveList(m_data);
             m_gch = GCHandle.Alloc(m_data, GCHandleType.Pinned);
         }
         public PinnedList(T[] data, bool clone = false)
         {
+            if(data == null)
+            {
+                return;
+            }
+
             m_data = clone ? (T[])data.Clone() : data;
-            m_list = ListCreateIntrusive(m_data);
+            m_list = PinnedListImpl.CreateIntrusiveList(m_data);
             m_gch = GCHandle.Alloc(m_data, GCHandleType.Pinned);
         }
         public PinnedList(List<T> data, bool clone = false)
         {
             m_list = clone ? new List<T>(data) : data;
-            m_data = ListGetInternalArray(m_list);
+            m_data = PinnedListImpl.GetInternalArray(m_list);
             m_gch = GCHandle.Alloc(m_data, GCHandleType.Pinned);
         }
 
@@ -176,16 +202,22 @@ namespace UTJ.Alembic
             get { return m_data[i]; }
             set { m_data[i] = value; }
         }
-        public T[] Array { get { return m_data; } }
+
+        public T[] GetArray() { return m_data; }
         public List<T> List { get { return m_list; } }
         public IntPtr Pointer { get { return Count == 0 ? IntPtr.Zero : m_gch.AddrOfPinnedObject(); } }
 
         public void LockList(Action<List<T>> body)
         {
+            if(body == null)
+            {
+                return;
+            }
+
             if (m_gch.IsAllocated)
                 m_gch.Free();
             body(m_list);
-            m_data = ListGetInternalArray(m_list);
+            m_data = PinnedListImpl.GetInternalArray(m_list);
             m_gch = GCHandle.Alloc(m_data, GCHandleType.Pinned);
         }
 
@@ -197,7 +229,7 @@ namespace UTJ.Alembic
                     l.Capacity = size;
                 });
             }
-            ListSetCount(m_list, size);
+            PinnedListImpl.SetCount(m_list, size);
         }
 
         public void ResizeDiscard(int size)
@@ -207,19 +239,19 @@ namespace UTJ.Alembic
                 if (m_gch.IsAllocated)
                     m_gch.Free();
                 m_data = new T[size];
-                m_list = ListCreateIntrusive(m_data);
+                m_list = PinnedListImpl.CreateIntrusiveList(m_data);
                 m_gch = GCHandle.Alloc(m_data, GCHandleType.Pinned);
             }
             else
             {
-                ListSetCount(m_list, size);
+                PinnedListImpl.SetCount(m_list, size);
             }
         }
 
         public void Clear()
         {
             if (m_data.Length > 0)
-                ListSetCount(m_list, 0);
+                PinnedListImpl.SetCount(m_list, 0);
         }
 
         public PinnedList<T> Clone()
@@ -229,12 +261,20 @@ namespace UTJ.Alembic
 
         public void Assign(T[] source)
         {
+            if(source == null)
+            {
+                return;
+            }
             ResizeDiscard(source.Length);
             System.Array.Copy(source, m_data, source.Length);
         }
         public void Assign(List<T> sourceList)
         {
-            var sourceData = ListGetInternalArray(sourceList);
+            if(sourceList == null)
+            {
+                return;
+            }
+            var sourceData = PinnedListImpl.GetInternalArray(sourceList);
             var count = sourceList.Count;
             ResizeDiscard(count);
             System.Array.Copy(sourceData, m_data, count);
@@ -265,6 +305,7 @@ namespace UTJ.Alembic
         }
 
         public static implicit operator IntPtr(PinnedList<T> v) { return v == null ? IntPtr.Zero : v.Pointer; }
+        internal static IntPtr ToIntPtr(PinnedList<T> v) { return v; }
     }
 
 }

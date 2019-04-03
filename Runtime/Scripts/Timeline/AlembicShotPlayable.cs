@@ -1,8 +1,9 @@
-﻿using UnityEngine.Playables;
+﻿using UnityEngine.Formats.Alembic.Importer;
+using UnityEngine.Playables;
 
-namespace UTJ.Alembic
+namespace UnityEngine.Formats.Alembic.Timeline
 {
-    public class AlembicShotPlayable : PlayableBehaviour
+    internal class AlembicShotPlayable : PlayableBehaviour
     {
         public AlembicStreamPlayer streamPlayer { get; set; }
 
@@ -15,7 +16,8 @@ namespace UTJ.Alembic
 
             var duration = streamPlayer.duration;
             var time = playable.GetTime();
-            streamPlayer.currentTime = (float)(time == duration ? duration : time % duration);
+            streamPlayer.CurrentTime = (float)(time == duration ? duration : time % duration);
+            streamPlayer.Update();
         }
     }
 }
