@@ -17,9 +17,9 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:unity3d-jp/AlembicForUnity.git",
-    "revision": "0c2760bece1100fc78e53264ec8dbcb5ebacc40e"
+    "revision": "4bbc7a0ff47cd00d50b804cfd65be7c291748951"
   },
   "unity": "2018.3",
   "unityRelease": "4f1",
-  "version": "1.0.2"
+  "version": "1.0.3"
 }
