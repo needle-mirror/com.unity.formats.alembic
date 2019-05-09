@@ -17,12 +17,12 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:unity3d-jp/AlembicForUnity.git",
-    "revision": "2fd99cea29462b607b6648c92f54a3e707612005"
+    "revision": "0ae04d195791c5dbbd76382db61853533c0ba32b"
   },
   "unity": "2018.3",
   "unityRelease": "4f1",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "1.0.4"
+    "com.unity.formats.alembic.tests": "1.0.5"
   }
 }
