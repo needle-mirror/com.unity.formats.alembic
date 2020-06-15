@@ -13,16 +13,18 @@
     "simulation"
   ],
   "name": "com.unity.formats.alembic",
-  "repoPackagePath": "build/install/com.unity.formats.alembic",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:unity3d-jp/AlembicForUnity.git",
-    "revision": "84130c914759a93283389255ab1df70afc1edfa3"
-  },
   "unity": "2018.3",
   "unityRelease": "4f1",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "1.0.6"
+    "com.unity.formats.alembic.tests": "1.0.7"
+  },
+  "upmCi": {
+    "footprint": "865af183eb4ec9b1be54c2867db69b60adce346b"
+  },
+  "repository": {
+    "url": "https://github.com/Unity-Technologies/AlembicForUnity.git",
+    "type": "git",
+    "revision": "e41f2e0ab77befd25e723a7f6385af5c1d8c8a96"
   }
 }
