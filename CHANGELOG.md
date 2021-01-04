@@ -1,15 +1,25 @@
 # Changes in Alembic for Unity
 
+## [2.2.0-exp.2] - 2021-01-04
+### Changes
+- Updated to Alembic version 1.7.16.
+- Added support for Stadia standalone builds.
+- Added support for arm64 macOS.
+- The package depends on the Cloth Unity Module.
+- Fixed a bug, where degenerate triangles would create NaN normals.
+- Fixed a bug in the importer to prevent the Editor from crashing when importing meshes with empty geometry samples.
+- Renamed AlembicCurve CurvePointCount to CurveOffsets, and changed the semantic to a stride array.
+
 ## [2.2.0-exp.1] - 2020-12-17
-### Feature
+### Changes
 - Added support for piecewise constant Curve importing
 
 ## [2.1.2] - 2020-12-14
-###
+### Changes
 - Fixed a bug causing the Alembic binary libraries to be copied into unsupported platform build, eg: iOS.
 
 ## [2.1.1-pre.1] - 2020-10-21
-### Feature
+### Changes
 - Added Unity recorder integration (compatible with Unity Recorder >= 2.2.0).
 
 ### Changes
