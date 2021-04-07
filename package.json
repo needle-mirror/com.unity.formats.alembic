@@ -3,7 +3,7 @@
     "com.unity.timeline": "1.0.0",
     "com.unity.modules.cloth": "1.0.0"
   },
-  "description": "Import and export Alembic files (.abc), record and stream animations in the Alembic format directly in Unity.\n\nThe Alembic format is commonly used in animation to transfer facial, cloth, and other simulation between applications.\n\nIMPORTANT: Alembic for Unity only supports Windows 64-bit, MacOS X and Linux 64-bit as build targets.",
+  "description": "Import and export Alembic files (.abc), record and stream animations in the Alembic format directly in Unity.\nNOTE: Supported build platforms: only Windows 64, MacOS X, Linux 64, and Stadia.\n\nThe Alembic format is commonly used in animation to transfer facial, cloth, and other simulation between applications in the form of baked data.",
   "displayName": "Alembic",
   "keywords": [
     "alembic",
@@ -14,17 +14,17 @@
     "simulation"
   ],
   "name": "com.unity.formats.alembic",
-  "unity": "2019.3",
-  "version": "2.2.0-exp.2",
+  "unity": "2019.4",
+  "version": "2.2.0-pre.3",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.2.0-exp.2"
+    "com.unity.formats.alembic.tests": "2.2.0-pre.3"
   },
   "upmCi": {
-    "footprint": "648cf9b30e051458dd3c66183e2e3d0e333b4d21"
+    "footprint": "7d2f26349211cf3cdc7f8e6ba57ff78b31d99323"
   },
   "repository": {
     "url": "https://github.com/Unity-Technologies/AlembicForUnity.git",
     "type": "git",
-    "revision": "4c4d756ed0850538eae6e7e96ba7e73060cb1bd7"
+    "revision": "60194b15da79837ec735678e10d106c2366f386c"
   }
 }

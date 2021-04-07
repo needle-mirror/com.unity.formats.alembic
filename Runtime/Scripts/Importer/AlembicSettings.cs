@@ -174,5 +174,20 @@ namespace UnityEngine.Formats.Alembic.Importer
             get { return importCurves; }
             set { importCurves = value; }
         }
+
+        [SerializeField] bool createCurveRenderers;
+        /// <summary>
+        /// If you enabled the importing of Alembic curves, this method automatically creates the AlembicCurveRendering component.
+        /// </summary>
+        public bool CreateCurveRenderers
+        {
+            get => createCurveRenderers;
+            set => createCurveRenderers = value;
+        }
+
+        internal class AlembicStreamSettingsCopier : ScriptableObject
+        {
+            public AlembicStreamSettings abcSettings;
+        }
     }
 }

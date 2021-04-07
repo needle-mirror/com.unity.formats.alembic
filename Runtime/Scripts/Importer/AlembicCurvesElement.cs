@@ -9,6 +9,7 @@ namespace UnityEngine.Formats.Alembic.Importer
         PinnedList<aiCurvesData> m_abcData = new PinnedList<aiCurvesData>(1);
         aiCurvesSummary m_summary;
         aiCurvesSampleSummary m_sampleSummary;
+        internal bool CreateRenderingComponent { get; set; }
 
         internal override aiSchema abcSchema { get { return m_abcSchema; } }
         public override bool visibility
@@ -23,25 +24,21 @@ namespace UnityEngine.Formats.Alembic.Importer
             m_abcSchema.GetSummary(ref m_summary);
         }
 
-        public override void AbcPrepareSample()
-        {
-            base.AbcPrepareSample();
-        }
-
         public override void AbcSyncDataBegin()
         {
-            if (!m_abcSchema.schema.isDataUpdated)
+            if (disposed || !m_abcSchema.schema.isDataUpdated)
                 return;
 
             var sample = m_abcSchema.sample;
             sample.GetSummary(ref m_sampleSummary);
 
             // get points cloud component
-            var curves = abcTreeNode.gameObject.GetComponent<AlembicCurves>();
-            if (curves == null)
+            var curves = abcTreeNode.gameObject.GetOrAddComponent<AlembicCurves>();
+            if (CreateRenderingComponent)
             {
-                curves = abcTreeNode.gameObject.AddComponent<AlembicCurves>();
+                abcTreeNode.gameObject.GetOrAddComponent<AlembicCurvesRenderer>();
             }
+
             var data = default(aiCurvesData);
 
             if (m_summary.hasPositions)
@@ -73,7 +70,7 @@ namespace UnityEngine.Formats.Alembic.Importer
 
         public override void AbcSyncDataEnd()
         {
-            if (!m_abcSchema.schema.isDataUpdated)
+            if (disposed || !m_abcSchema.schema.isDataUpdated)
                 return;
 
             var data = m_abcData[0];
