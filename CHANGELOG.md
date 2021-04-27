@@ -4,6 +4,17 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0-pre.4] - 2021-04-27
+### Added
+### Changed
+### Fixed
+- Fixed a bug that caused out of project stream files to have the wrong number of material slots.
+- Fixed a bug that was causing data loss when resetting the AlembicStreamPlayer.
+- Fixed a bug that was converting previous Alembic instance in prefabs into out-of-project references.
+- Fixed a bug that was adding unnecessary Undo events during the Alembic asset import process.
+- Fixed a bug that was re-importing Alembic files on every SRP project start.
+- Fixed a bug that caused standalone builds to fail when the Alembic assets are read-only.
+
 ## [2.2.0-pre.3] - 2021-04-07
 ### Added
 - New option to automatically add the AlembicCurveRendering components for basic preview of the curves in the Scene.

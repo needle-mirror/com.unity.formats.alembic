@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using System;
 using UnityEngine.Formats.Alembic.Sdk;
 using UnityEngine.Rendering;
 using static UnityEngine.Formats.Alembic.Importer.RuntimeUtils;
@@ -12,7 +13,7 @@ namespace UnityEngine.Formats.Alembic.Importer
     /// </summary>
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
-    public class AlembicStreamPlayer : MonoBehaviour
+    public class AlembicStreamPlayer : MonoBehaviour, ISerializationCallbackReceiver
     {
         internal enum AlembicStreamSource
         {
@@ -245,19 +246,30 @@ namespace UnityEngine.Formats.Alembic.Importer
 
             var defaultMat = AlembicMesh.GetDefaultMaterial();
 
-            foreach (var meshRenderer in gameObject.GetComponentsInChildren<MeshRenderer>(true))
+            gameObject.DepthFirstVisitor(go =>
             {
-                var mats = meshRenderer.sharedMaterials;
-                for (var i = 0; i < mats.Length; ++i)
+                var filter = go.GetComponent<MeshFilter>();
+                var meshRenderer = go.GetComponent<MeshRenderer>();
+                if (filter == null || meshRenderer == null)
                 {
-                    if (mats[i] == null) // Add the default material if no material present
-                    {
-                        mats[i] = defaultMat;
-                    }
+                    return;
+                }
+
+                var mesh = filter.sharedMesh;
+                if (mesh == null)
+                {
+                    return;
+                }
+
+                var subMesh = mesh.subMeshCount;
+                var mats = new Material[subMesh];
+                for (var i = 0; i < subMesh; ++i)
+                {
+                    mats[i] = defaultMat;
                 }
 
                 meshRenderer.sharedMaterials = mats;
-            }
+            });
 
             return true;
         }
@@ -358,6 +370,18 @@ namespace UnityEngine.Formats.Alembic.Importer
         void OnApplicationQuit()
         {
             NativeMethods.aiCleanup();
+        }
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize()
+        {
+        }
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        {
+            if (streamDescriptor != null && streamDescriptor.GetType() == typeof(AlembicStreamDescriptor))
+            {
+                streamSource = AlembicStreamSource.Internal;
+            }
         }
     }
 }
