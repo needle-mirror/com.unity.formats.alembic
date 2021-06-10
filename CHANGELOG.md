@@ -4,6 +4,13 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2021-06-10
+### Added
+### Changed
+### Fixed
+- Fixed an issue where changing the start value of the streaming time range would slightly change the end of range value.
+- Fixed a bug that was causing visual artefacts due to motion vector persistence when pausing Alembic playback.
+
 ## [2.2.0-pre.4] - 2021-04-27
 ### Added
 ### Changed
