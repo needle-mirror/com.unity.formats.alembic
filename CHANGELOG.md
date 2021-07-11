@@ -4,17 +4,19 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.2] - 2021-09-01
+## [2.3.0-pre.1] - 2021-07-11
 ### Added
-### Changed
-### Fixed
-- Prevented material assignments from being lost for a streamed external Alembic file when changing the Alembic source file link.
+- Added support for importing the cage mesh of SubD Alembic nodes.
+- The Alembic Importer window now has a Material tab to assign materials to the imported Alembic asset submeshes.
+- The Material tab includes a tool to automatically assign materials based on the Face Set names of the original Alembic file.
 
-## [2.2.1] - 2021-07-10
-### Added
 ### Changed
+- GameObjects that only have a Transform component are now included when exporting Alembic files.
+- Automatically set the timeline clip length when dragging an AlembicStreamPlayer onto a timeline Alembic track.
 ### Fixed
+- Fixed a bug that caused Unity Cloth Alembic export to ignore the world scale.
 - Fixed a bug that caused an error when manually adding an AlembicStreamPlayer Component.
+- Prevented material assignments from being lost for a streamed external Alembic file when changing the Alembic source file link.
 
 ## [2.2.0] - 2021-06-10
 ### Added
