@@ -15,16 +15,16 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2019.4",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.2.1"
+    "com.unity.formats.alembic.tests": "2.2.2"
   },
   "upmCi": {
-    "footprint": "9ff07ece99d681f63ed9902dfcfc6809d070a175"
+    "footprint": "4fca675ef2d480c892675d889139e6767c772e3d"
   },
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "ff3be13d1002dd4b66ddf473dc96ee7f9a6bf2b4"
+    "revision": "4862c73a13ae0cd4ec3489e4356301d0b3c75c2a"
   }
 }
