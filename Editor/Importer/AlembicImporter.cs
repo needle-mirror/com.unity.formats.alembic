@@ -76,7 +76,7 @@ namespace UnityEditor.Formats.Alembic.Importer
         }
     }
 
-    [ScriptedImporter(9, "abc")]
+    [ScriptedImporter(10, "abc")]
     internal class AlembicImporter : ScriptedImporter
     {
         [SerializeField]
@@ -130,7 +130,7 @@ namespace UnityEditor.Formats.Alembic.Importer
 
         internal bool IsHDF5
         {
-            get { return isHDF5;}
+            get { return isHDF5; }
         }
         [SerializeField] bool isHDF5;
 
@@ -149,7 +149,6 @@ namespace UnityEditor.Formats.Alembic.Importer
 
         internal struct MaterialEntry
         {
-            //public AlembicCustomData component;
             public string path;
             public string facesetName;
             public int index;
@@ -228,6 +227,8 @@ namespace UnityEditor.Formats.Alembic.Importer
                     }
 
                     ApplyMaterialAssignments(go, subassets);
+
+                    AlembicImporterAnalytics.SendAnalytics(abcStream.abcTreeRoot, this);
                 }
             }
 
@@ -286,7 +287,7 @@ namespace UnityEditor.Formats.Alembic.Importer
                 var path = GetGameObjectPath(customData.gameObject);
                 for (var i = 0; i < customData.FaceSetNames.Count; ++i)
                 {
-                    var entry = new MaterialEntry {facesetName = customData.FaceSetNames[i], index = i, path = path};
+                    var entry = new MaterialEntry { facesetName = customData.FaceSetNames[i], index = i, path = path };
                     if (remap.TryGetValue(entry.ToSourceAssetIdentifier(), out var material))
                     {
                         entry.material = (Material)material;
