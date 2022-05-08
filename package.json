@@ -16,16 +16,20 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2019.4",
-  "version": "2.3.0",
+  "version": "2.3.2",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.3.0"
+    "com.unity.formats.alembic.tests": "2.3.2"
+  },
+  "_upm": {
+    "changelog": "### Added\n- At import, additional data is added to GameObject cameras to conform with URP or HDRP rendering pipelines.\n\n### Fixed\n- Fixed an issue where a mesh from an Alembic file with visibility samples gets wrongly serialized in scenes.\n- Fixed the Normals import settings of the Importer.\n- When a user changes HDRP quality settings, the Editor no longer re-imports Alembic assets."
   },
   "upmCi": {
-    "footprint": "1f28ddba1b4374c2a6f57ce3d697bc1285165e1c"
+    "footprint": "64e8236cf0960d661e1acd8a9eb331c419514cd6"
   },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.3/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "8028622d16aba1f9d5eb0f7598886030db7bd200"
+    "revision": "7a5ae5f5959a395d8fa04ca724a202f124a7dad7"
   }
 }
