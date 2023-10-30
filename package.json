@@ -16,20 +16,20 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2019.4",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.3.3"
+    "com.unity.formats.alembic.tests": "2.3.4"
   },
   "_upm": {
-    "changelog": "### Fixed\n- Prevent a warning in the Console due to deprecated `RecorderInputSetting.ValidityCheck()` when Alembic is installed along with Recorder.\n- Prevent warnings related to FindObjectOfType<> calls on package installation with Unity Editor 2023.1+.\n- Prevent broken links in Alembic files that would be first imported and then moved outside of the Unity project folder.\n- Prevent some memory leak resulting from Alembic mesh unload.\n\n### Removed\n- Removed support of Stadia as a build target."
+    "changelog": "### Fixed\n- Prevent a NullReferenceException when upgrading a project with URP and Alembic to Unity 2023.3."
   },
   "upmCi": {
-    "footprint": "476f80ebe3e25355987a1f308ac1791fd8560035"
+    "footprint": "c03cbded0fa1523c229df983e644cd3edbc1a072"
   },
   "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.3/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "c825600b78af9a179f3f78d3f0f75c5e0c32c09a"
+    "revision": "5a5c70e6eb8b85a13f1199f67e84e44d546fe0b0"
   }
 }
