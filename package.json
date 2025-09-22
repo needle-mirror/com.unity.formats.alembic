@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.timeline": "1.0.0",
+    "com.unity.timeline": "1.8.7",
     "com.unity.modules.unityanalytics": "1.0.0",
     "com.unity.modules.cloth": "1.0.0"
   },
@@ -15,21 +15,21 @@
     "simulation"
   ],
   "name": "com.unity.formats.alembic",
-  "unity": "2019.4",
-  "version": "2.4.0",
+  "unity": "2021.3",
+  "version": "2.4.1",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.4.0"
+    "com.unity.formats.alembic.tests": "2.4.1"
   },
   "_upm": {
-    "changelog": "### Added\n- Added library for Windows ARM64 platform support.\n\n### Changed\n- Updated Alembic to 1.8.5 (was 1.7.16).\n- Updated ISPC to 1.21.0 (was 1.14.1).\n\n### Fixed\n- Fixed bug where vertex color displayed as black when processing RGB, RGBA, and Normal attributes in the `Face` scope\n- Fixed bug causing Editor to crash when a UV attribute is processed in the `Points` or `Face` scope.\n- Prevent a NullReferenceException when adding a curve renderer to an Alembic file with non-visible meshes."
+    "changelog": "### Changed\n- Bump minimum Unity version to 2021.3.\n\n### Fixed\n- Fixed crash when importing a corrupted Alembic file."
   },
   "upmCi": {
-    "footprint": "1509c97479e6b1fdf80b5f6135de0e1df22b6527"
+    "footprint": "7a6c530912eb3cff89b621f8b904b69a4f2281cc"
   },
   "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "e7bdaa51d3725be85e55946df9087e1c0046d2a7"
+    "revision": "cc76bb30eb890330603e8411feee1129c4b8db84"
   }
 }

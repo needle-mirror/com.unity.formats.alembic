@@ -2,7 +2,7 @@
 
 This section covers all properties specific to the Alembic Clip Recorder type.
 
-> **Note:**
+> [!NOTE]
 > * You must install the [Unity Recorder](https://docs.unity3d.com/Packages/com.unity.recorder@latest/index.html) package (minimum version: 2.0.0) to use the Alembic Clip Recorder.
 > * To fully configure an Alembic Clip Recorder, you must also set the global Recording Properties for the capture (properties shared with the other recorders, such as the frames to record). The [Unity Recorder documentation](https://docs.unity3d.com/Packages/com.unity.recorder@latest/index.html) describes these properties in detail.
 
@@ -13,12 +13,22 @@ The Alembic Clip Recorder properties fall into three main categories:
 * [Alembic Settings](#alembic-settings)
 * [Capture Settings](#capture-settings)
 
+> [!NOTE]
+> The [Input](#input) section is only relevant when you set the recording section's Playback property to Variable, and the Output Format section is empty because this recorder type only exports to the Alembic format.
+
+## Input
+
+| Property | Description |
+| :--- | :--- |
+| **Render Frame Step** | Available when you set **Playback** to **Variable**. Specifies the number of rendered frames to discard between recorded frames. The duration of the discarded frames is preserved, reducing frames per second. Example: if the value is 2, every second frame is discarded, but the duration of the recording remains the same. |
+
 
 ## Output File
 
 Use this section to specify the output **Path** and **File Name** pattern to save the recorded images.
 
-> **Note:** Output File properties work the same for all types of recorders. The [Unity Recorder documentation](https://docs.unity3d.com/Packages/com.unity.recorder@latest/index.html) describes these properties in detail.
+> [!NOTE]
+> Output File properties work the same for all types of recorders. The [Unity Recorder documentation](https://docs.unity3d.com/Packages/com.unity.recorder@latest/index.html) describes these properties in detail.
 
 
 ## Alembic Settings
@@ -39,7 +49,8 @@ Use this section to define the properties of the Alembic output.
 
 Use this section to determine the set of target GameObject(s) for the current capture. Once the capture begins, the target set is locked and does not change. Enabling or disabling a GameObject in the target set does not affect the capture. Any GameObjects generated after the start of the capture are not included.
 
-> **Warning:** Deleting a target GameObject in the middle of a capture interrupts the capture, and the Alembic file might have a non-uniform number of samples as a result. Some software might not handle this properly.
+> [!WARNING]
+> Deleting a target GameObject in the middle of a capture interrupts the capture, and the Alembic file might have a non-uniform number of samples as a result. Some software might not handle this properly.
 
 | Property || Description |
 | :--- | :--- | :--- |
@@ -73,4 +84,5 @@ Use these settings to fine-tune the Mesh data you are saving.
 | __Vertex Color__ | Enable to export vertex colors. |
 | __Submeshes__    | Enable to export sub-Meshes.    |
 
-> **Note:** Alembic does not support Material export, and therefore neither does Alembic in Unity.
+> [!NOTE]
+> Alembic does not support Material export, and therefore neither does Alembic in Unity.
