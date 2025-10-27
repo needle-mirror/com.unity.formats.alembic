@@ -16,20 +16,20 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2021.3",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.4.1"
+    "com.unity.formats.alembic.tests": "2.4.2"
   },
   "_upm": {
-    "changelog": "### Changed\n- Bump minimum Unity version to 2021.3.\n\n### Fixed\n- Fixed crash when importing a corrupted Alembic file."
+    "changelog": "### Changed\n- Re-serialized material as text, as binary files are not supported anymore."
   },
   "upmCi": {
-    "footprint": "7a6c530912eb3cff89b621f8b904b69a4f2281cc"
+    "footprint": "b9db023762485e682ac71194f7310b778d06d2e8"
   },
   "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "cc76bb30eb890330603e8411feee1129c4b8db84"
+    "revision": "dd4d83e64b0bfe9c079ea1984e72449e0d3985bb"
   }
 }
