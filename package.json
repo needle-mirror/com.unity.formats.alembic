@@ -16,20 +16,20 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2021.3",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.4.2"
+    "com.unity.formats.alembic.tests": "2.4.3"
   },
   "_upm": {
-    "changelog": "### Changed\n- Re-serialized material as text, as binary files are not supported anymore."
+    "changelog": "### Changed\n- Updating changelog for clarity."
   },
   "upmCi": {
-    "footprint": "b9db023762485e682ac71194f7310b778d06d2e8"
+    "footprint": "fe4bed364e0338bbf5f168ed65a902a64fc0c41b"
   },
   "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "dd4d83e64b0bfe9c079ea1984e72449e0d3985bb"
+    "revision": "4160131bf296a90cf3dd27d7d03d7d6c323625e3"
   }
 }
