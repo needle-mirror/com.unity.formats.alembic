@@ -16,20 +16,20 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2021.3",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.4.3"
+    "com.unity.formats.alembic.tests": "2.4.4"
   },
   "_upm": {
-    "changelog": "### Changed\n- Updating changelog for clarity."
+    "changelog": "### Changed\n- Signed binaries on Windows and Mac.\n\n### Fixed\n- Fixed crash when importing a corrupted Alembic file."
   },
   "upmCi": {
-    "footprint": "fe4bed364e0338bbf5f168ed65a902a64fc0c41b"
+    "footprint": "a225a1cf83d3aa1e6b80be7beccbe794e056feca"
   },
   "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "4160131bf296a90cf3dd27d7d03d7d6c323625e3"
+    "revision": "f157622b30b4ffc899a2fcb4fefd879d46020024"
   }
 }
