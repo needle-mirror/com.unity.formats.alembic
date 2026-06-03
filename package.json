@@ -16,20 +16,20 @@
   ],
   "name": "com.unity.formats.alembic",
   "unity": "2021.3",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "relatedPackages": {
-    "com.unity.formats.alembic.tests": "2.4.4"
+    "com.unity.formats.alembic.tests": "2.4.5"
   },
   "_upm": {
-    "changelog": "### Changed\n- Signed binaries on Windows and Mac.\n\n### Fixed\n- Fixed crash when importing a corrupted Alembic file."
+    "changelog": "### Changed\n- Update deprecated and obsolete APIs available in Unity 6000.4 and above.\n\n### Fixed\n- Fixed a crash when importing an Alembic PolyMesh that has vertices but no faces (IN-133221)."
   },
   "upmCi": {
-    "footprint": "a225a1cf83d3aa1e6b80be7beccbe794e056feca"
+    "footprint": "34353767171c6c635781ca619be3e7316820e4f7"
   },
   "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html",
   "repository": {
     "url": "https://github.com/Unity-Technologies/com.unity.formats.alembic.git",
     "type": "git",
-    "revision": "f157622b30b4ffc899a2fcb4fefd879d46020024"
+    "revision": "bf21fe6627b6f8cea1da4b4e3e6ebc2e8b564308"
   }
 }
